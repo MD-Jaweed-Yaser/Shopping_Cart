@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base :: parent(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- Add Bootstrap CSS -->
+</head>
+<body>
+
+	<section>
+		<div class="container-fluid mt-5 p-4 ">
+			
+				<p class="text-center fs-3 mt-2">Cart Page</p>
+
+
+				<div th:if="${successMsg}" class="alert alert-success text-center">[[${successMsg}]]
+				</div>
+
+				<!-- Error Message -->
+				<div th:if="${errorMsg}" class="alert alert-danger text-center">
+					[[${errorMsg}]]</div>
+
+
+
+
+
+
+
+				<div class="card card-sh">
+					<div class="p-3">
+						<table class="table ">
+							<thead class="table-light ">
+								<tr>
+									<th scope="col">Sl No</th>
+									<th scope="col">Image</th>
+									<th scope="col">Product Name</th>
+									<th scope="col">Price</th>
+									<th scope="col" class="text-center">Quantity</th>
+									<th scope="col">Total Price</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr th:each="cart,c:${carts}">
+									<th scope="row">[[${c.count}]]</th>
+									<td><img
+										th:src="@{'/img/product_img/'+${cart.product.imageName}}"
+										width="70px" height="70px"></td>
+
+									<td>[[${cart.product.title}]]</td>
+									<td>[[${cart.product.discountPrice}]]</td>
+
+
+									<td class="text-center"><a
+										th:href="@{'/user/cartQuantityUpdate?sy=in&cid='+${cart.id}}">
+											<i class="fa-solid fa-plus"></i>
+									</a> [ [[${cart.quantity}]] ] <a
+										th:href="@{'/user/cartQuantityUpdate?sy=de&cid='+${cart.id}}">
+											<i class="fa-solid fa-minus"></i>
+									</a></td>
+
+
+									<td>[[${cart.totalPrice}]]</td>
+
+								</tr>
+
+								<tr>
+
+									<td colspan="4"></td>
+									<td class="fw-bold">Total Price</td>
+									<td class="fw-bold">&#8377; [[${totalOrderPrice}]]</td>
+								</tr>
+								
+								<tr class="border" >
+								
+
+
+							</tbody>
+						</table>
+						
+						<div class="text-center"><a href="/user/orders" class="btn btn-warning">Proceed Payment</a></div>
+
+						<!-- <div class="row">
+						<div class="col-md-4">Total Product : [[${totalElements}]]</div>
+						<div class="col-md-6">
+
+							<nav aria-label="Page navigation example">
+								<ul class="pagination">
+									<li class="page-item"
+										th:classappend="${isFirst} ? 'disabled':''"><a
+										class="page-link"
+										th:href="@{'/admin/products?pageNo='+${pageNo-1}}"
+										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+									</a></li>
+
+									<li th:each="i:${#numbers.sequence(1,totalPages)}"
+										class="page-item" th:classappend="${pageNo+1==i}?'active':''"
+										]]><a class="page-link"
+										th:href="@{'/admin/products?pageNo='+${i-1}}">[[${i}]]</a></li>
+
+									<li class="page-item"
+										th:classappend="${isLast} ? 'disabled':''"><a
+										class="page-link"
+										th:href="@{'/admin/products?pageNo='+${pageNo+1}}"
+										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+									</a></li>
+								</ul>
+							</nav>
+						</div>
+
+					</div> -->
+					</div>
+				</div>
+			
+		</div>
+	</section>
+
+
+	<!-- Add Bootstrap JS -->
+</body>
+</html>

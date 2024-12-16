@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base :: parent(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+	<section>
+		<div class="container-fluid mt-5 p-4 ">
+			<div class="row">
+				<p class="text-center fs-3 mt-2" th:if="${userType==1}">Users</p>
+				<p class="text-center fs-3 mt-2" th:if="${userType==2}">Admins</p>
+
+
+				<div th:if="${successMsg}" class="alert alert-success text-center">[[${successMsg}]]
+				</div>
+
+				<!-- Error Message -->
+				<div th:if="${errorMsg}" class="alert alert-danger text-center">
+					[[${errorMsg}]]</div>
+
+
+				<hr>
+				<a href="/admin/" class="text-decoration-none"><i
+					class="fa-solid fa-arrow-left"></i> Back</a>
+
+				<div class="col-md-4 p-3">
+
+					<form action="/admin/users" method="get">
+						<div class="row">
+							<div class="col">
+								<input type="text" class="form-control " name="ch" placeholder="Search users...">
+							</div>
+							<div class="col">
+								<button class="btn btn-primary col">Search</button>
+							</div>
+						</div>
+					</form>
+
+				</div>
+
+
+				<div class="card card-sh">
+					<div class="p-3">
+						<table class="table table-bordered">
+							<thead class="table-light ">
+								<tr>
+									<th scope="col">Sl No</th>
+									<th scope="col">Profile</th>
+									<th scope="col">Name</th>
+									<th scope="col">Email</th>
+									<th scope="col">Mobile Number</th>
+									<th scope="col">Address</th>
+									<th scope="col">Account Status</th>
+									<th scope="col">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+
+
+
+									<tr th:each="u,c:${users}">
+										<th scope="row">[[${c.count}]]</th>
+										<td><img
+											th:src="@{'/img/profile_img/'+${u.profileImage}}"
+											width="70px" height="70px"></td>
+
+										<td>[[${u.name}]]</td>
+										<td>[[${u.email}]]</td>
+										<td>[[${u.mobileNumber}]]</td>
+										<td>[[${u.address+','+u.state+','+u.pincode}]]</td>
+										<td>[[${u.isEnable}]]</td>
+
+										<td><a
+											th:href="@{'/admin/updateStatus?status=true&id='+${u.id}}+'&type='+${userType}"
+											class="btn btn-sm btn-primary"> Active</a> <a
+											th:href="@{'/admin/updateStatus?status=false&id='+${u.id}}+'&type='+${userType}"
+											class="btn btn-sm btn-danger"> Inactive</a></td>
+									</tr>
+								
+								
+
+							</tbody>
+						</table>
+
+						 <div class="row">
+						<div class="col-md-4">Total Users : [[${totalElements}]]</div>
+						<div class="col-md-6">
+
+							<nav aria-label="Page navigation example">
+								<ul class="pagination">
+									<li class="page-item"
+										th:classappend="${isFirst} ? 'disabled':''"><a
+										class="page-link"
+										th:href="@{'/admin/users?pageNo='+${pageNo-1}}"
+										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+									</a></li>
+
+									<li th:each="i:${#numbers.sequence(1,totalPages)}"
+										class="page-item" th:classappend="${pageNo+1==i}?'active':''"
+										]]><a class="page-link"
+										th:href="@{'/admin/users?pageNo='+${i-1}}">[[${i}]]</a></li>
+
+									<li class="page-item"
+										th:classappend="${isLast} ? 'disabled':''"><a
+										class="page-link"
+										th:href="@{'/admin/users?pageNo='+${pageNo+1}}"
+										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+									</a></li>
+								</ul>
+							</nav>
+						</div>
+
+					</div> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+</body>
+</html>
